@@ -50,5 +50,4 @@ class Matrix(object):
                 adjacencyMatrix[i][j] = ((adji[0][0] * adji[1][1]) - (adji[0][1] * adji[1][0])) * sign
                 sign *= -1
 
-        print(adjacencyMatrix)
         return adjacencyMatrix

@@ -27,13 +27,9 @@ class Key(object):
     def getInverseKey(self):
 
         keyDeterminant = self.matrix.getDeterminant() % self.modulo
-        print(keyDeterminant)
         transposeKey = self.matrix.getTransposeMatrix()
-        print(transposeKey)
         adjacencyKey = self.matrix.getAdjacencyMatrix()
-        print(adjacencyKey)
         multiplicativeInverse = getMultiplicativeInverse(keyDeterminant, self.modulo)
-        print(multiplicativeInverse)
 
         modularInverseKey = []
 
@@ -45,13 +41,11 @@ class Key(object):
             modularInverseKey.append(newRow)
 
         inverseKey = []
-        print(modularInverseKey)
-        for i in range(self.blockSize):
-            newRow = []
-            for j in range(self.blockSize):
+        for j in range(self.blockSize):
+            newColumn = []
+            for i in range(self.blockSize):
                 newElement = int((modularInverseKey[i][j] * multiplicativeInverse) % self.modulo)
-                newRow.append(newElement)
-            inverseKey.append(newRow)
+                newColumn.append(newElement)
+            inverseKey.append(newColumn)
 
-        print(inverseKey)
         return inverseKey
