@@ -22,13 +22,18 @@ class HillCipher(object):
         keyValid = self.key.checkKeyValidity()
 
         if keyValid == False:
+            print("Invalid key! Exiting...")
             return False, None
 
         key = self.key.getInverseKey()
+        
 
         originalText = self.__transformText(key, word)
+
+        originalText = originalText.replace("?", "")
         
         return True, originalText
+
 
     def __transformText(self, key, word):
         numericText = []
@@ -39,7 +44,7 @@ class HillCipher(object):
             numericKeyBlock = self.__convertTextToNumberArray(textBlock)
             cipherBlock = self.__cryptWordBlock(numericKeyBlock, key)
             numericText[i:i+self.blockSize] = cipherBlock
-            cipherText = self.__convertNumberArrayToText(numericText)
+        cipherText = self.__convertNumberArrayToText(numericText)
 
         return cipherText
 
@@ -64,7 +69,7 @@ class HillCipher(object):
         else:
             endPosition = (startPosition + self.blockSize) + (startPosition + self.blockSize - len(word))
             for i in range (startPosition + self.blockSize - len(word)):
-                word += 'X'
+                word += '?'
 
 
         textBlock = word[startPosition:endPosition]
@@ -73,13 +78,14 @@ class HillCipher(object):
     def __convertTextToNumberArray(self, text):
         numericArray = []
         for i in range(len(text)):
-            numericArray.append(ord(text[i]) - 65)
+            numericArray.append(ord(text[i]) - 60)
 
         return numericArray
 
     def __convertNumberArrayToText(self, numberArray):
         text = ""
+
         for i in range(len(numberArray)):
-            text += chr(numberArray[i] + 65)
+            text += chr(numberArray[i] + 60)
 
         return text
